@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="AlphaMovieView">
+    <attr name="alphaColor" format="color" />
+    <attr name="autoPlayAfterResume" format="boolean" />
+    <attr name="loopStartMs" format="integer" />
+    <attr name="loopEndMs" format="integer" />
+    <attr name="loopSeekingMethod" format="integer" />
+    <attr name="packed" format="boolean" />
+    <attr name="shader" format="string" />
+    <attr name="accuracy" format="float" />
+  </declare-styleable>
+</resources>

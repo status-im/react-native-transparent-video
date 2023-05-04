@@ -1,26 +1,39 @@
+import React from 'react';
 import {
   requireNativeComponent,
-  UIManager,
   Platform,
   ViewStyle,
 } from 'react-native';
-
-const LINKING_ERROR =
-  `The package 'react-native-transparent-video' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
+import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 type TransparentVideoProps = {
-  color: string;
   style: ViewStyle;
+  source?: any;
 };
 
 const ComponentName = 'TransparentVideoView';
 
-export const TransparentVideoView =
-  UIManager.getViewManagerConfig(ComponentName) != null
-    ? requireNativeComponent<TransparentVideoProps>(ComponentName)
-    : () => {
-        throw new Error(LINKING_ERROR);
-      };
+const TransparentVideoView = requireNativeComponent(ComponentName);
+
+class TransparentVideo extends React.PureComponent<TransparentVideoProps> {
+  render() {
+    const source = resolveAssetSource(this.props.source) || {};
+    let uri = source.uri || '';
+    if (uri && uri.match(/^\//)) {
+      uri = `file://${uri}`;
+    }
+
+    const nativeProps = Object.assign({}, this.props);
+    Object.assign(nativeProps, {
+      style: nativeProps.style,
+      src: {
+        uri,
+        type: source.type || '',
+      },
+    });
+
+    return <TransparentVideoView {...nativeProps} />;
+  }
+}
+
+export default TransparentVideo;

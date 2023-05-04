@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+import com.facebook.react.bridge.ReadableMap;
+
+import java.util.Dictionary;
 
 public class TransparentVideoViewManager extends SimpleViewManager<View> {
   public static final String REACT_CLASS = "TransparentVideoView";
@@ -24,8 +27,8 @@ public class TransparentVideoViewManager extends SimpleViewManager<View> {
     return new View(reactContext);
   }
 
-  @ReactProp(name = "color")
-  public void setColor(View view, String color) {
-    view.setBackgroundColor(Color.parseColor(color));
+  @ReactProp(name = "src")
+  public void setSrc(View view, ReadableMap src) {
+    view.setBackgroundColor(Color.BLUE);
   }
 }

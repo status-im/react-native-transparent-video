@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E555C0D2413F4C50049A1A2 /* TransparentVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* TransparentVideo.m */; };
-		F4FF95D7245B92E800C19C63 /*  TransparentVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  TransparentVideo.swift */; };
+		C12B19DF2A020CC0001F03AB /* TransparentVideoViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C12B19DD2A020CC0001F03AB /* TransparentVideoViewManager.m */; };
+		C12B19E02A020CC0001F03AB /* TransparentVideoViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12B19DE2A020CC0001F03AB /* TransparentVideoViewManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,9 +25,9 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libTransparentVideo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTransparentVideo.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3E7B5891CC2AC0600A0062D /* TransparentVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransparentVideo.m; sourceTree = "<group>"; };
+		C12B19DD2A020CC0001F03AB /* TransparentVideoViewManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TransparentVideoViewManager.m; sourceTree = "<group>"; };
+		C12B19DE2A020CC0001F03AB /* TransparentVideoViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentVideoViewManager.swift; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* TransparentVideo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TransparentVideo-Bridging-Header.h"; sourceTree = "<group>"; };
-		F4FF95D6245B92E800C19C63 /* TransparentVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentVideo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +52,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				F4FF95D6245B92E800C19C63 /* TransparentVideo.swift */,
-				B3E7B5891CC2AC0600A0062D /* TransparentVideo.m */,
+				C12B19DD2A020CC0001F03AB /* TransparentVideoViewManager.m */,
+				C12B19DE2A020CC0001F03AB /* TransparentVideoViewManager.swift */,
 				F4FF95D5245B92E700C19C63 /* TransparentVideo-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
@@ -116,8 +116,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4FF95D7245B92E800C19C63 /* TransparentVideo.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* TransparentVideo.m in Sources */,
+				C12B19DF2A020CC0001F03AB /* TransparentVideoViewManager.m in Sources */,
+				C12B19E02A020CC0001F03AB /* TransparentVideoViewManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
