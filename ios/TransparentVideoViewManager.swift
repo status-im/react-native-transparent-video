@@ -55,30 +55,76 @@ class TransparentVideoView : UIView {
     }
     
     // Load our player item
-    let playerItem = createTransparentItem(url: itemUrl)
-    
-    self.playerView!.loadPlayerItem(playerItem) { result in
-      switch result {
-      case .failure(let error):
-        return print("Something went wrong when loading our video", error)
-
-      case .success(let player):
-        // Finally, we can start playing
-        player.play()
-      }
-    }
+    loadItem(url: itemUrl)
   }
   
   // MARK: - Player Item Configuration
   
-  func createTransparentItem(url: URL) -> AVPlayerItem {
+  private func loadItem(url: URL) {
+    setUpAsset(with: url) { [weak self] (asset: AVAsset) in
+      self?.setUpPlayerItem(with: asset)
+    }
+  }
+  
+  private func setUpAsset(with url: URL, completion: ((_ asset: AVAsset) -> Void)?) {
     let asset = AVAsset(url: url)
-    let playerItem = AVPlayerItem(asset: asset)
-    // Set the video so that seeking also renders with transparency
-    playerItem.seekingWaitsForVideoCompositionRendering = true
-    // Apply a video composition (which applies our custom filter)
-    playerItem.videoComposition = createVideoComposition(for: asset)
-    return playerItem
+    asset.loadValuesAsynchronously(forKeys: ["metadata"]) {
+      var error: NSError? = nil
+      let status = asset.statusOfValue(forKey: "metadata", error: &error)
+      switch status {
+      case .loaded:
+        completion?(asset)
+      case .failed:
+        print(".failed")
+      case .cancelled:
+        print(".cancelled")
+      default:
+              print("default")
+          }
+      }
+  }
+  
+  private func setUpPlayerItem(with asset: AVAsset) {
+    DispatchQueue.main.async { [weak self] in
+      let playerItem = AVPlayerItem(asset: asset)
+      //playerItem.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: [.old, .new], context: nil)
+      playerItem.seekingWaitsForVideoCompositionRendering = true
+      // Apply a video composition (which applies our custom filter)
+      playerItem.videoComposition = self?.createVideoComposition(for: asset)
+
+      self?.playerView!.loadPlayerItem(playerItem) { result in
+        switch result {
+        case .failure(let error):
+          return print("Something went wrong when loading our video", error)
+
+        case .success(let player):
+          // Finally, we can start playing
+          player.play()
+        }
+      }
+    }
+  }
+  
+  override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    if keyPath == #keyPath(AVPlayerItem.status) {
+      let status: AVPlayerItem.Status
+      if let statusNumber = change?[.newKey] as? NSNumber {
+        status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
+      } else {
+        status = .unknown
+      }
+      // Switch over status value
+      switch status {
+      case .readyToPlay:
+        print(".readyToPlay")
+      case .failed:
+        print(".failed")
+      case .unknown:
+        print(".unknown")
+      @unknown default:
+        print("@unknown default")
+          }
+      }
   }
   
   func createVideoComposition(for asset: AVAsset) -> AVVideoComposition {

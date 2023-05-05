@@ -2,6 +2,7 @@ package com.transparentvideo;
 
 import android.graphics.Color;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
@@ -14,6 +15,7 @@ import java.util.Dictionary;
 
 public class TransparentVideoViewManager extends SimpleViewManager<View> {
   public static final String REACT_CLASS = "TransparentVideoView";
+  private AlphaMovieView alphaMovieView;
 
   @Override
   @NonNull
@@ -29,6 +31,11 @@ public class TransparentVideoViewManager extends SimpleViewManager<View> {
 
   @ReactProp(name = "src")
   public void setSrc(View view, ReadableMap src) {
+    if (this.alphaMovieView == null) {
+      alphaMovieView = new AlphaMovieView(view.getContext(), null); //new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+      alphaMovieView.setAutoPlayAfterResume(true);
+      alphaMovieView.setVideoByUrl(src.getString("uri"));
+    }
     view.setBackgroundColor(Color.BLUE);
   }
 }
