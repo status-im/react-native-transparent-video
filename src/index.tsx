@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-  requireNativeComponent,
-  Platform,
-  ViewStyle,
-} from 'react-native';
+import { requireNativeComponent, ViewStyle } from 'react-native';
+// @ts-ignore
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 
 type TransparentVideoProps = {
