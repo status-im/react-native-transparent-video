@@ -58,6 +58,13 @@ class TransparentVideoView : UIView {
     loadItem(url: itemUrl)
   }
   
+  deinit {
+    playerView?.player?.pause()
+    playerView?.player?.replaceCurrentItem(with: nil)
+    playerView?.removeFromSuperview()
+    playerView = nil
+  }
+  
   // MARK: - Player Item Configuration
   
   private func loadItem(url: URL) {
