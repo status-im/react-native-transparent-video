@@ -159,7 +159,6 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				B254C78279E1703AC198B6F9 /* [CP] Embed Pods Frameworks */,
 				5AAA60A676534D0A39309A17 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -182,7 +181,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				BB55B3945FAE5B08746CC796 /* [CP] Embed Pods Frameworks */,
 				A209273306B44872997D8079 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -318,40 +316,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransparentVideoExample/Pods-TransparentVideoExample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B254C78279E1703AC198B6F9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TransparentVideoExample-TransparentVideoExampleTests/Pods-TransparentVideoExample-TransparentVideoExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TransparentVideoExample-TransparentVideoExampleTests/Pods-TransparentVideoExample-TransparentVideoExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransparentVideoExample-TransparentVideoExampleTests/Pods-TransparentVideoExample-TransparentVideoExampleTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BB55B3945FAE5B08746CC796 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TransparentVideoExample/Pods-TransparentVideoExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TransparentVideoExample/Pods-TransparentVideoExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TransparentVideoExample/Pods-TransparentVideoExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FCA46571122E4A63384E26E1 /* [CP] Check Pods Manifest.lock */ = {
