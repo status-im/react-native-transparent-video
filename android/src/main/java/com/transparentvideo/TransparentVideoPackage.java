@@ -17,6 +17,6 @@ public class TransparentVideoPackage implements ReactPackage {
 
   @Override
   public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-    return Arrays.<ViewManager>asList(new TransparentVideoViewManager());
+    return Arrays.<ViewManager>asList(new TransparentVideoViewManager(reactContext));
   }
 }

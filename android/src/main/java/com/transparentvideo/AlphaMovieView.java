@@ -21,6 +21,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.media.MediaDataSource;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
@@ -31,6 +32,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Surface;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -43,7 +46,7 @@ public class AlphaMovieView extends GLTextureView {
 
     private static final int NOT_DEFINED = -1;
     private static final int NOT_DEFINED_COLOR = 0;
-    private static final int TIME_DETECTION_INTERVAL_MS = 50;
+    private static final int TIME_DETECTION_INTERVAL_MS = 100;
 
     private static final String TAG = "VideoSurfaceView";
 
@@ -154,10 +157,10 @@ public class AlphaMovieView extends GLTextureView {
     }
 
     private void obtainRendererOptions(AttributeSet attrs) {
-        if (attrs != null) {
+        //if (attrs != null) {
             TypedArray arr = getContext().obtainStyledAttributes(attrs, R.styleable.AlphaMovieView);
-            this.accuracy = arr.getFloat(R.styleable.AlphaMovieView_accuracy, NOT_DEFINED);
-            this.alphaColor = arr.getColor(R.styleable.AlphaMovieView_alphaColor, NOT_DEFINED_COLOR);
+            this.accuracy = arr.getFloat(R.styleable.AlphaMovieView_accuracy, 0.95f);
+            this.alphaColor = arr.getColor(R.styleable.AlphaMovieView_alphaColor, Color.argb(1,0,255,0));
             this.autoPlayAfterResume = arr.getBoolean(R.styleable.AlphaMovieView_autoPlayAfterResume, false);
             this.isPacked = arr.getBoolean(R.styleable.AlphaMovieView_packed, false);
             this.loopStartMs = arr.getInteger(R.styleable.AlphaMovieView_loopStartMs, -1);
@@ -171,7 +174,7 @@ public class AlphaMovieView extends GLTextureView {
             this.shader = arr.getString(R.styleable.AlphaMovieView_shader);
             arr.recycle();
             updateRendererOptions();
-        }
+       // }
     }
 
     private void updateRendererOptions() {
@@ -406,6 +409,8 @@ public class AlphaMovieView extends GLTextureView {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         release();
+      handler.removeCallbacks(timeDetector);
+      TransparentVideoViewManager.destroyView((LinearLayout)this.getParent());
     }
 
     private void prepareAsync(final MediaPlayer.OnPreparedListener onPreparedListener) {

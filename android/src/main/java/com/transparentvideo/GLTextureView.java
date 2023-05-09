@@ -1136,6 +1136,10 @@ public class GLTextureView
                 guardedRun();
             } catch (InterruptedException e) {
                 // fall thru and exit normally
+            } catch (IllegalStateException e) {
+              // fall thru and exit normally
+            }  catch (Exception e) {
+              // fall thru and exit normally
             } finally {
                 sGLThreadManager.threadExiting(this);
             }

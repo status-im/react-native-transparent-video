@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import TransparentVideo from 'react-native-transparent-video';
 import Animated, {
   useAnimatedSensor,
@@ -18,13 +18,12 @@ const ParallaxVideo = ({ source, zIndex }: any) => {
   const sensor = useAnimatedSensor(SensorType.ROTATION, { interval: 10 });
 
   const layerStyle = useAnimatedStyle(() => {
-    const { yaw, pitch, roll } = sensor.sensor.value;
-    console.log(yaw, pitch, roll, 99);
+    const { pitch, roll } = sensor.sensor.value;
 
     const top = withTiming(
       interpolate(
         pitch,
-        [-HALF_PI, HALF_PI],
+        Platform.OS === 'ios' ? [-HALF_PI, HALF_PI] : [HALF_PI, -HALF_PI],
         [-OFFSET / zIndex - OFFSET, OFFSET / zIndex - OFFSET]
       ),
       { duration: 100 }
@@ -48,7 +47,7 @@ const ParallaxVideo = ({ source, zIndex }: any) => {
     const bottom = withTiming(
       interpolate(
         pitch,
-        [-HALF_PI, HALF_PI],
+        Platform.OS === 'ios' ? [-HALF_PI, HALF_PI] : [HALF_PI, -HALF_PI],
         [OFFSET / zIndex - OFFSET, -OFFSET / zIndex - OFFSET]
       ),
       { duration: 10 }

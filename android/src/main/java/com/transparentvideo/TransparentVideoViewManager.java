@@ -1,21 +1,33 @@
 package com.transparentvideo;
 
-import android.graphics.Color;
-import android.view.View;
-import android.view.ViewGroup;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+
+import android.view.Gravity;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
+import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.bridge.ReadableMap;
 
-import java.util.Dictionary;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-public class TransparentVideoViewManager extends SimpleViewManager<View> {
+public class TransparentVideoViewManager extends SimpleViewManager<LinearLayout> {
+
+  private static List<LinearLayout> sInstances = new ArrayList<>();
+
   public static final String REACT_CLASS = "TransparentVideoView";
-  private AlphaMovieView alphaMovieView;
+
+  ReactApplicationContext reactContext;
+
+  public TransparentVideoViewManager(ReactApplicationContext reactContext) {
+    this.reactContext = reactContext;
+  }
 
   @Override
   @NonNull
@@ -25,17 +37,28 @@ public class TransparentVideoViewManager extends SimpleViewManager<View> {
 
   @Override
   @NonNull
-  public View createViewInstance(ThemedReactContext reactContext) {
-    return new View(reactContext);
+  public LinearLayout createViewInstance(ThemedReactContext reactContext) {
+    LinearLayout view = new LinearLayout(this.reactContext);
+    sInstances.add(view);
+    return view;
+  }
+
+  public static void destroyView(LinearLayout view) {
+    sInstances.remove(view);
   }
 
   @ReactProp(name = "src")
-  public void setSrc(View view, ReadableMap src) {
-    if (this.alphaMovieView == null) {
-      alphaMovieView = new AlphaMovieView(view.getContext(), null); //new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+  public void setSrc(LinearLayout view, ReadableMap src) {
+    AlphaMovieView alphaMovieView = (AlphaMovieView)view.getChildAt(0);
+    if (alphaMovieView == null) {
+      alphaMovieView = new AlphaMovieView(reactContext, null);
+      LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+      lp.gravity = Gravity.CENTER;
+      alphaMovieView.setLayoutParams(lp);
       alphaMovieView.setAutoPlayAfterResume(true);
-      alphaMovieView.setVideoByUrl(src.getString("uri"));
+      view.addView(alphaMovieView);
     }
-    view.setBackgroundColor(Color.BLUE);
+    alphaMovieView.setPacked(true);
+    alphaMovieView.setVideoByUrl(src.getString("uri"));
   }
 }

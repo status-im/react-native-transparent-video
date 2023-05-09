@@ -184,6 +184,8 @@ class VideoRenderer implements GLTextureView.Renderer, SurfaceTexture.OnFrameAva
 
     @Override
     public void onSurfaceDestroyed(GL10 gl) {
+      GLES20.glDeleteProgram(program);
+      GLES20.glDeleteTextures(1, new int[]{textureID}, 0);
     }
 
     @Override
