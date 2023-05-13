@@ -55,7 +55,7 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 Special thanks to:
 - Quentin Fasquel for this [Medium article](https://medium.com/@quentinfasquel/ios-transparent-video-with-coreimage-52cfb2544d54)
 - Tristan Ferré for this [Medium article](https://medium.com/go-electra/unlock-transparency-in-videos-on-android-5dc43776cc72)
-- [@pavelsemak](https://www.github.com/pavelsemak) for creating [this repository](https://github.com/pavelsemak/alpha-movie) and [@nopol10](https://www.github.com/nopol10) for [this fork](https://github.com/nopol10/alpha-movie) which implements the alpha-packing approach and was used to build this React Native library 
+- [@pavelsemak](https://www.github.com/pavelsemak) for creating [this repository](https://github.com/pavelsemak/alpha-movie) and [@nopol10](https://www.github.com/nopol10) for [this fork](https://github.com/nopol10/alpha-movie) which implements the alpha-packing approach that was used to build this React Native library 
 
 ## License
 
