@@ -1,6 +1,10 @@
 # react-native-transparent-video
 
-React Native video player with alpha channel (alpha-packing) support.
+React Native video player with alpha channel (alpha-packing) support. It works on iOS and Android.
+
+Example of a mp4 video with alpha-packing:
+
+https://github.com/status-im/react-native-transparent-video/assets/18485527/69ea988e-0c7d-4123-84a1-1ca46b61994e
 
 ## Installation
 
@@ -8,24 +12,49 @@ React Native video player with alpha channel (alpha-packing) support.
 npm install react-native-transparent-video
 ```
 
+or
+
+```sh
+yarn add react-native-transparent-video
+```
+
 ## Usage
 
 ```js
-import { TransparentVideoView } from "react-native-transparent-video";
+import TransparentVideo from 'react-native-transparent-video';
 
-// ...
+const video = require('../assets/video.mp4');
 
-<TransparentVideoView color="tomato" />
+function App() {
+  return (
+    <View>
+      <TransparentVideo source={video} style={styles.transparentVideo} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  transparentVideo: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+});
 ```
 
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
 
+## Recognition
+
+Special thanks to:
+- Quentin Fasquel for this [Medium article](https://medium.com/@quentinfasquel/ios-transparent-video-with-coreimage-52cfb2544d54)
+- Tristan Ferré for this [Medium article](https://medium.com/go-electra/unlock-transparency-in-videos-on-android-5dc43776cc72)
+- [@pavelsemak](https://www.github.com/pavelsemak) for creating [this repository](https://github.com/pavelsemak/alpha-movie) and [@nopol10](https://www.github.com/nopol10) for [this fork](https://github.com/nopol10/alpha-movie) which implements the alpha-packing approach and was used to build this React Native library 
+
 ## License
 
 MIT
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
