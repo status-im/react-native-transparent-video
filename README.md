@@ -1,3 +1,5 @@
+![](https://github.com/status-im/react-native-transparent-video/assets/18485527/92a5b88f-b152-404e-a4ff-5d7552842cd8)
+
 # react-native-transparent-video
 
 React Native video player with alpha channel (alpha-packing) support. It works on iOS and Android.
