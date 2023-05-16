@@ -92,12 +92,12 @@ class TransparentVideoView : UIView {
   }
   
   private func setUpPlayerItem(with asset: AVAsset) {
-    let playerItem = AVPlayerItem(asset: asset)
-    playerItem.seekingWaitsForVideoCompositionRendering = true
-    // Apply a video composition (which applies our custom filter)
-    playerItem.videoComposition = createVideoComposition(for: asset)
-
     DispatchQueue.main.async { [weak self] in
+      let playerItem = AVPlayerItem(asset: asset)
+      playerItem.seekingWaitsForVideoCompositionRendering = true
+      // Apply a video composition (which applies our custom filter)
+      playerItem.videoComposition = self?.createVideoComposition(for: asset)
+
       self?.playerView!.loadPlayerItem(playerItem) { result in
         switch result {
         case .failure(let error):
