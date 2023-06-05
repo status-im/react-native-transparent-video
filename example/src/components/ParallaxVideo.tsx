@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
 import TransparentVideo from 'react-native-transparent-video';
 import Animated, {
   useAnimatedSensor,
@@ -12,51 +12,33 @@ import Animated, {
 
 const OFFSET = 50;
 const PI = Math.PI;
-const HALF_PI = PI / 2;
 
 const ParallaxVideo = ({ source, zIndex }: any) => {
-  const sensor = useAnimatedSensor(SensorType.ROTATION, { interval: 10 });
+  const sensor = useAnimatedSensor(SensorType.ACCELEROMETER, { interval: 10 });
 
   const layerStyle = useAnimatedStyle(() => {
-    const { pitch, roll } = sensor.sensor.value;
+    let { x, y, z } = sensor.sensor.value;
+    const pitch = Math.abs((Math.atan2(y, z) * 180) / PI) * -1;
+    const roll = (Math.atan2(-x, Math.sqrt(y * y + z * z)) * 180) / PI;
 
     const top = withTiming(
-      interpolate(
-        pitch,
-        Platform.OS === 'ios' ? [-HALF_PI, HALF_PI] : [HALF_PI, -HALF_PI],
-        [-OFFSET / zIndex - OFFSET, OFFSET / zIndex - OFFSET]
-      ),
+      interpolate(pitch, Platform.OS === 'ios' ? [-180, 0] : [0, -180], [
+        -OFFSET / zIndex - OFFSET,
+        OFFSET / zIndex - OFFSET,
+      ]),
       { duration: 100 }
     );
     const left = withTiming(
-      interpolate(
-        roll,
-        [-PI, PI],
-        [(-OFFSET * 2) / zIndex - OFFSET, (OFFSET * 2) / zIndex - OFFSET]
-      ),
+      interpolate(roll, Platform.OS === 'ios' ? [90, -90] : [-90, 90], [
+        (-OFFSET * 2) / zIndex - OFFSET,
+        (OFFSET * 2) / zIndex - OFFSET,
+      ]),
       { duration: 100 }
     );
-    const right = withTiming(
-      interpolate(
-        roll,
-        [-PI, PI],
-        [(OFFSET * 2) / zIndex - OFFSET, (-OFFSET * 2) / zIndex - OFFSET]
-      ),
-      { duration: 100 }
-    );
-    const bottom = withTiming(
-      interpolate(
-        pitch,
-        Platform.OS === 'ios' ? [-HALF_PI, HALF_PI] : [HALF_PI, -HALF_PI],
-        [OFFSET / zIndex - OFFSET, -OFFSET / zIndex - OFFSET]
-      ),
-      { duration: 10 }
-    );
+
     return {
       top,
       left,
-      right,
-      bottom,
     };
   });
 
@@ -70,6 +52,8 @@ const ParallaxVideo = ({ source, zIndex }: any) => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
+    width: Dimensions.get('window').width + OFFSET * 2,
+    height: Dimensions.get('window').height + OFFSET * 2,
   },
   video: {
     position: 'absolute',
