@@ -327,6 +327,30 @@ public class AlphaMovieView extends GLTextureView {
         }
     }
 
+  public void setVideoFromResourceId(Context context, int resId) {
+    reset();
+
+    try {
+      AssetFileDescriptor afd = context.getResources().openRawResourceFd(resId);
+      if (afd == null) return;
+
+      mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+
+      FileDescriptor fileDescriptor = afd.getFileDescriptor();
+      long startOffset = afd.getStartOffset();
+      long endOffset = afd.getLength();
+      mediaPlayer.setDataSource(fileDescriptor, startOffset, endOffset);
+
+      MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+      retriever.setDataSource(fileDescriptor, startOffset, endOffset);
+
+      onDataSourceSet(retriever);
+
+    } catch (IOException e) {
+      Log.e(TAG, e.getMessage(), e);
+    }
+  }
+
     public void setVideoFromFile(FileDescriptor fileDescriptor) {
         reset();
 
