@@ -4,6 +4,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 
@@ -24,6 +25,7 @@ public class TransparentVideoViewManager extends SimpleViewManager<LinearLayout>
   private static List<LinearLayout> sInstances = new ArrayList<>();
 
   public static final String REACT_CLASS = "TransparentVideoView";
+  private static final String TAG = "TransparentVideoViewManager";
 
   ReactApplicationContext reactContext;
 
@@ -64,8 +66,11 @@ public class TransparentVideoViewManager extends SimpleViewManager<LinearLayout>
     String file = src.getString("uri");
     try {
       Integer rawResourceId = Utils.getRawResourceId(reactContext, file);
+      Log.d(TAG + " setSrc", "ResourceID: " + rawResourceId);
+
       alphaMovieView.setVideoFromResourceId(reactContext, rawResourceId);
     } catch (RuntimeException e) {
+      Log.e(TAG + " setSrc", e.getMessage(), e);
       alphaMovieView.setVideoByUrl(file);
     }
   }

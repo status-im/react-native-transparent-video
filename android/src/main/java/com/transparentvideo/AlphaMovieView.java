@@ -334,8 +334,6 @@ public class AlphaMovieView extends GLTextureView {
       AssetFileDescriptor afd = context.getResources().openRawResourceFd(resId);
       if (afd == null) return;
 
-      mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-
       FileDescriptor fileDescriptor = afd.getFileDescriptor();
       long startOffset = afd.getStartOffset();
       long endOffset = afd.getLength();
@@ -347,7 +345,7 @@ public class AlphaMovieView extends GLTextureView {
       onDataSourceSet(retriever);
 
     } catch (IOException e) {
-      Log.e(TAG, e.getMessage(), e);
+      Log.e(TAG + " setVideoFromResourceId", e.getMessage(), e);
     }
   }
 
