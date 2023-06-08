@@ -63,7 +63,9 @@ public class TransparentVideoViewManager extends SimpleViewManager<LinearLayout>
       view.addView(alphaMovieView);
     }
     alphaMovieView.setPacked(true);
-    String file = src.getString("uri");
+    String file = src.getString("uri").toLowerCase();
+    Log.d(TAG + " setSrc", "file: " + file);
+
     try {
       Integer rawResourceId = Utils.getRawResourceId(reactContext, file);
       Log.d(TAG + " setSrc", "ResourceID: " + rawResourceId);
