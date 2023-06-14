@@ -8,6 +8,10 @@ Example of a mp4 video with alpha-packing:
 
 https://github.com/status-im/react-native-transparent-video/assets/18485527/69ea988e-0c7d-4123-84a1-1ca46b61994e
 
+### Recommendations
+
+To achieve best compatibility across different Android devices and versions, please check the [video encoding recommendations](https://developer.android.com/guide/topics/media/media-formats#video-encoding) from the Android documentation portal.
+
 ## Installation
 
 ```sh
