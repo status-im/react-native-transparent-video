@@ -7,6 +7,7 @@ type TransparentVideoProps = {
   style: StyleProp<ViewStyle>;
   source?: any;
   loop?: boolean;
+  autoplay?: boolean;
 };
 
 const ComponentName = 'TransparentVideoView';
@@ -27,6 +28,7 @@ class TransparentVideo extends React.PureComponent<TransparentVideoProps> {
       src: {
         uri,
         type: source.type || '',
+        autoplay: nativeProps.autoplay,
       },
       loop: nativeProps.loop ?? true,
     });
