@@ -17,15 +17,17 @@ class TransparentVideoView : UIView {
 
   private var source: VideoSource?
   private var playerView: AVPlayerView?
+  private var autoplay: Bool?
 
   @objc var src: NSDictionary = NSDictionary() {
     didSet {
       self.source = VideoSource(src)
+      self.autoplay = src["autoplay"] as? Bool ?? false
       let itemUrl = URL(string: self.source!.uri!)!
       loadVideoPlayer(itemUrl: itemUrl)
     }
   }
-  
+
   @objc var loop: Bool = Bool() {
     didSet {
       // Setup looping on our video
@@ -36,12 +38,12 @@ class TransparentVideoView : UIView {
       }
     }
   }
-  
+
   func loadVideoPlayer(itemUrl: URL) {
     if (self.playerView == nil) {
       let playerView = AVPlayerView(frame: CGRect(origin: .zero, size: .zero))
       addSubview(playerView)
-     
+
       // Use Auto Layout anchors to center our playerView
       playerView.translatesAutoresizingMaskIntoConstraints = false
       NSLayoutConstraint.activate([
@@ -50,37 +52,36 @@ class TransparentVideoView : UIView {
         playerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
         playerView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
       ])
-      
+
       // Setup our playerLayer to hold a pixel buffer format with "alpha"
       let playerLayer: AVPlayerLayer = playerView.playerLayer
       playerLayer.pixelBufferAttributes = [
           (kCVPixelBufferPixelFormatTypeKey as String): kCVPixelFormatType_32BGRA]
-      
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackgound), name: UIApplication.didEnterBackgroundNotification, object: nil)
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 
       self.playerView = playerView
     }
-    
+
     // Load our player item
     loadItem(url: itemUrl)
   }
-  
+
   deinit {
     playerView?.player?.pause()
     playerView?.player?.replaceCurrentItem(with: nil)
     playerView?.removeFromSuperview()
     playerView = nil
   }
-  
+
   // MARK: - Player Item Configuration
-  
+
   private func loadItem(url: URL) {
     setUpAsset(with: url) { [weak self] (asset: AVAsset) in
       self?.setUpPlayerItem(with: asset)
     }
   }
-  
+
   private func setUpAsset(with url: URL, completion: ((_ asset: AVAsset) -> Void)?) {
     let asset = AVAsset(url: url)
     asset.loadValuesAsynchronously(forKeys: ["metadata"]) {
@@ -98,7 +99,7 @@ class TransparentVideoView : UIView {
           }
       }
   }
-  
+
   private func setUpPlayerItem(with asset: AVAsset) {
     DispatchQueue.main.async { [weak self] in
       let playerItem = AVPlayerItem(asset: asset)
@@ -111,14 +112,18 @@ class TransparentVideoView : UIView {
         case .failure(let error):
           return print("Something went wrong when loading our video", error)
 
-        case .success(let player):
+        case .success(let player) where self?.autoplay == true:
           // Finally, we can start playing
           player.play()
+
+        case .success(let player):
+          // Finally, we can start playing
+          player.pause()
         }
       }
     }
   }
-  
+
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
     if keyPath == #keyPath(AVPlayerItem.status) {
       let status: AVPlayerItem.Status
@@ -140,7 +145,7 @@ class TransparentVideoView : UIView {
           }
       }
   }
-  
+
   func createVideoComposition(for asset: AVAsset) -> AVVideoComposition {
     let filter = AlphaFrameFilter(renderingMode: .builtInFilter)
     let composition = AVMutableVideoComposition(asset: asset, applyingCIFiltersWithHandler: { request in
@@ -157,9 +162,9 @@ class TransparentVideoView : UIView {
     composition.renderSize = asset.videoSize.applying(CGAffineTransform(scaleX: 1.0, y: 0.5))
     return composition
   }
-  
+
   // MARK: - Lifecycle callbacks
-  
+
   @objc func appEnteredBackgound() {
     if let tracks = self.playerView?.player?.currentItem?.tracks {
       for track in tracks {
