@@ -17,12 +17,17 @@ class TransparentVideoView : UIView {
 
   private var source: VideoSource?
   private var playerView: AVPlayerView?
-  private var autoplay: Bool?
+  private var videoAutoplay: Bool?
 
   @objc var src: NSDictionary = NSDictionary() {
     didSet {
       self.source = VideoSource(src)
-      self.autoplay = src["autoplay"] as? Bool ?? false
+    }
+  }
+
+  @objc var autoplay: Bool = false {
+    didSet {
+      self.videoAutoplay = autoplay
       let itemUrl = URL(string: self.source!.uri!)!
       loadVideoPlayer(itemUrl: itemUrl)
     }
@@ -112,7 +117,7 @@ class TransparentVideoView : UIView {
         case .failure(let error):
           return print("Something went wrong when loading our video", error)
 
-        case .success(let player) where self?.autoplay == true:
+        case .success(let player) where self?.videoAutoplay == true:
           // Finally, we can start playing
           player.play()
 
