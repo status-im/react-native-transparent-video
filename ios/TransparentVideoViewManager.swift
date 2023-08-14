@@ -22,11 +22,11 @@ class TransparentVideoView : UIView {
     didSet {
       self.source = VideoSource(src)
       let itemUrl = URL(string: self.source!.uri!)!
-      loadVideoPlayer(itemUrl: itemUrl)
+      loadVideoPlayer(itemUrl: itemUrl, self.loopEnabled: Bool)
     }
   }
   
-  func loadVideoPlayer(itemUrl: URL) {
+  func loadVideoPlayer(itemUrl: URL, loopEnabled: Bool) {
     if (self.playerView == nil) {
       let playerView = AVPlayerView(frame: CGRect(origin: .zero, size: .zero))
       addSubview(playerView)
@@ -46,7 +46,7 @@ class TransparentVideoView : UIView {
           (kCVPixelBufferPixelFormatTypeKey as String): kCVPixelFormatType_32BGRA]
 
       // Setup looping on our video
-      playerView.isLoopingEnabled = false
+      playerView.isLoopingEnabled = loopEnabled
       
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackgound), name: UIApplication.didEnterBackgroundNotification, object: nil)
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
