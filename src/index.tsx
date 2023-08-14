@@ -24,7 +24,7 @@ class TransparentVideo extends React.PureComponent<TransparentVideoProps> {
     const nativeProps = Object.assign({}, this.props);
     Object.assign(nativeProps, {
       style: nativeProps.style,
-      loopEnabled: nativeProps.repeat,
+      loopEnabled: nativeProps.loopEnabled,
       src: {
         uri,
         type: source.type || '',
