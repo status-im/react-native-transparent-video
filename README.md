@@ -15,19 +15,19 @@ To achieve best compatibility across different Android devices and versions, ple
 ## Installation
 
 ```sh
-npm install react-native-transparent-video
+npm install @status-im/react-native-transparent-video
 ```
 
 or
 
 ```sh
-yarn add react-native-transparent-video
+yarn add @status-im/react-native-transparent-video
 ```
 
 ## Usage
 
 ```js
-import TransparentVideo from 'react-native-transparent-video';
+import TransparentVideo from '@status-im/react-native-transparent-video';
 
 const video = require('../assets/video.mp4');
 
