@@ -26,10 +26,10 @@ class TransparentVideoView : UIView {
     }
   }
   
-  @objc var loop: Bool = Bool() {
+  @objc var disableLoop: Bool = Bool() {
     didSet {
       // Setup looping on our video
-      self.playerView?.isLoopingEnabled = loop
+      self.playerView?.isLoopingEnabled = !disableLoop
       let player = self.playerView?.player
       if (loop && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
