@@ -22,14 +22,18 @@ class TransparentVideoView : UIView {
   @objc var src: NSDictionary = NSDictionary() {
     didSet {
       self.source = VideoSource(src)
+      let itemUrl = URL(string: self.source!.uri!)!
+      loadVideoPlayer(itemUrl: itemUrl)
     }
   }
 
   @objc var autoplay: Bool = false {
     didSet {
       self.videoAutoplay = autoplay
-      let itemUrl = URL(string: self.source!.uri!)!
-      loadVideoPlayer(itemUrl: itemUrl)
+      let player = self.playerView?.player
+      if (autoplay && && (player?.rate == 0 || player?.error != nil)) {
+        player?.play()
+      }
     }
   }
 
