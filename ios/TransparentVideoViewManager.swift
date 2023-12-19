@@ -18,6 +18,7 @@ class TransparentVideoView : UIView {
   private var source: VideoSource?
   private var playerView: AVPlayerView?
   private var videoAutoplay: Bool?
+  private var loop: Bool?
 
   @objc var src: NSDictionary = NSDictionary() {
     didSet {
@@ -31,6 +32,7 @@ class TransparentVideoView : UIView {
     didSet {
       self.videoAutoplay = autoplay
       let player = self.playerView?.player
+      self.playerView?.isLoopingEnabled = self.loop
       if (autoplay && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
       }
@@ -41,6 +43,7 @@ class TransparentVideoView : UIView {
     didSet {
       // Setup looping on our video
       self.playerView?.isLoopingEnabled = loop
+      self.loop = loop
       let player = self.playerView?.player
       if (loop && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
