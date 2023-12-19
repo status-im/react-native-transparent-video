@@ -5,6 +5,6 @@
 RCT_EXPORT_VIEW_PROPERTY(src, NSDictionary);
 RCT_EXPORT_VIEW_PROPERTY(loop, BOOL);
 RCT_EXPORT_VIEW_PROPERTY(autoplay, BOOL);
-RCT_EXPORT_VIEW_PROPERTY(config, NSMutableDictionary);
+RCT_EXPORT_VIEW_PROPERTY(config, NSDictionary);
 
 @end
