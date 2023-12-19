@@ -28,24 +28,25 @@ class TransparentVideoView : UIView {
     }
   }
 
-  @objc var autoplay: Bool = Bool() {
-    didSet {
-      self.videoAutoplay = autoplay
-      let player = self.playerView?.player
-      self.playerView?.isLoopingEnabled = self.loop
-      if (autoplay && (player?.rate == 0 || player?.error != nil)) {
-        player?.play()
-      }
-    }
-  }
-
   @objc var loop: Bool = Bool() {
     didSet {
       // Setup looping on our video
       self.playerView?.isLoopingEnabled = loop
-      self.loop = loop
-      let player = self.playerView?.player
-      if (loop && (player?.rate == 0 || player?.error != nil)) {
+      // self.loop = loop
+      // let player = self.playerView?.player
+      // if (loop && (player?.rate == 0 || player?.error != nil)) {
+      //   player?.play()
+      // }
+    }
+  }
+
+  @objc var autoplay: Bool = Bool() {
+    didSet {
+      self.videoAutoplay != autoplay,
+      guard let player = self.playerView?.player else { return }
+      // self.playerView?.isLoopingEnabled = self.loop
+      // self.videoAutoplay = autoplay
+      if (autoplay && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
       }
     }
