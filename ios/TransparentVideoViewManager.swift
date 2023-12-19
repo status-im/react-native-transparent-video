@@ -56,9 +56,9 @@ class TransparentVideoView : UIView {
 
   @objc var config: NSDictionary = NSMutableDictionary() {
     didSet {
-      let autoplay =
+      let autoplay = config["autoplay"] as! Bool
       self.playerView?.isLoopingEnabled = config["loop"] as! Bool
-      self.videoAutoplay = config["autoplay"] as! Bool
+      self.videoAutoplay = autoplay
       let player = self.playerView?.player
       if (autoplay && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
