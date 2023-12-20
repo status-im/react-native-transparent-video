@@ -35,7 +35,7 @@ class TransparentVideoView : UIView {
       self.videoLoop = loop
       self.playerView?.isLoopingEnabled = loop
       // self.loop = loop
-      // let player = self.playerView?.player
+      let player = self.playerView?.player
       if (loop && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
       }
