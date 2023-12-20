@@ -57,8 +57,10 @@ class TransparentVideoView : UIView {
   @objc var config: NSDictionary = NSDictionary() {
     didSet {
       let autoplay = config["autoplay"] as! Bool
-      self.playerView?.isLoopingEnabled = config["loop"] as! Bool
+      let loop = config["loop"] as! Bool
+      self.playerView?.isLoopingEnabled = loop
       self.videoAutoplay = autoplay
+      self.videoLoop = loop
       let player = self.playerView?.player
       if (autoplay && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
@@ -86,7 +88,7 @@ class TransparentVideoView : UIView {
           (kCVPixelBufferPixelFormatTypeKey as String): kCVPixelFormatType_32BGRA]
 
       // Setup looping on our video
-      playerView.isLoopingEnabled = true
+      playerView.isLoopingEnabled = self?.videoAutoplay ?? true
 
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackgound), name: UIApplication.didEnterBackgroundNotification, object: nil)
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
