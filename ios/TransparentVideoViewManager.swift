@@ -141,7 +141,7 @@ class TransparentVideoView : UIView {
       playerItem.videoComposition = self?.createVideoComposition(for: asset)
 
       // Setup looping on our video
-      self?.playerView!.isLoopingEnabled = self.videoAutoplay ?? true
+      self?.playerView!.isLoopingEnabled = self?.videoAutoplay ?? true
 
       self?.playerView!.loadPlayerItem(playerItem) { result in
         switch result {
