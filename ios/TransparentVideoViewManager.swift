@@ -62,7 +62,7 @@ class TransparentVideoView : UIView {
       self.videoAutoplay = autoplay
       self.videoLoop = loop
       let player = self.playerView?.player
-      if (autoplay && (player?.rate == 0 || player?.error != nil)) {
+      if ((loop || autoplay) && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
       }
     }
@@ -139,6 +139,9 @@ class TransparentVideoView : UIView {
       playerItem.seekingWaitsForVideoCompositionRendering = true
       // Apply a video composition (which applies our custom filter)
       playerItem.videoComposition = self?.createVideoComposition(for: asset)
+
+      // Setup looping on our video
+      self?.playerView!.isLoopingEnabled = self.videoAutoplay ?? true
 
       self?.playerView!.loadPlayerItem(playerItem) { result in
         switch result {
