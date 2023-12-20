@@ -84,6 +84,10 @@ class TransparentVideoView : UIView {
       let playerLayer: AVPlayerLayer = playerView.playerLayer
       playerLayer.pixelBufferAttributes = [
           (kCVPixelBufferPixelFormatTypeKey as String): kCVPixelFormatType_32BGRA]
+
+      // Setup looping on our video
+      playerView.isLoopingEnabled = true
+
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackgound), name: UIApplication.didEnterBackgroundNotification, object: nil)
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
 
