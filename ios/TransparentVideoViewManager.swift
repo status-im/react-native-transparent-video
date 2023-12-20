@@ -28,45 +28,46 @@ class TransparentVideoView : UIView {
     }
   }
 
-  // @objc var loop: Bool = Bool() {
-  //   didSet {
-  //     // Setup looping on our video
-  //     // self.playerView?.isLoopingEnabled = loop
-  //     self.videoLoop = loop
-  //     // self.loop = loop
-  //     // let player = self.playerView?.player
-  //     // if (loop && (player?.rate == 0 || player?.error != nil)) {
-  //     //   player?.play()
-  //     // }
-  //   }
-  // }
-
-  // @objc var autoplay: Bool = Bool() {
-  //   didSet {
-  //     self.videoAutoplay = autoplay
-  //     self.playerView?.isLoopingEnabled = self.videoLoop
-  //     // self.playerView?.isLoopingEnabled = self.loop
-  //     // self.videoAutoplay = autoplay
-  //     let player = self.playerView?.player
-  //     if (autoplay && (player?.rate == 0 || player?.error != nil)) {
-  //       player?.play()
-  //     }
-  //   }
-  // }
-
-  @objc var config: NSDictionary = NSDictionary() {
+  @objc var loop: Bool = Bool() {
     didSet {
-      let autoplay = config["autoplay"] as! Bool
-      let loop = config["loop"] as! Bool
-      self.playerView?.isLoopingEnabled = loop
-      self.videoAutoplay = autoplay
+      // Setup looping on our video
+      // self.playerView?.isLoopingEnabled = loop
       self.videoLoop = loop
-      let player = self.playerView?.player
-      if ((loop || autoplay) && (player?.rate == 0 || player?.error != nil)) {
+      self.playerView?.isLoopingEnabled = loop
+      // self.loop = loop
+      // let player = self.playerView?.player
+      if (loop && (player?.rate == 0 || player?.error != nil)) {
         player?.play()
       }
     }
   }
+
+  @objc var autoplay: Bool = Bool() {
+    didSet {
+      self.videoAutoplay = autoplay
+      // self.playerView?.isLoopingEnabled = self.videoLoop
+      // self.playerView?.isLoopingEnabled = self.loop
+      // self.videoAutoplay = autoplay
+      let player = self.playerView?.player
+      if (autoplay && (player?.rate == 0 || player?.error != nil)) {
+        player?.play()
+      }
+    }
+  }
+
+  // @objc var config: NSDictionary = NSDictionary() {
+  //   didSet {
+  //     let autoplay = config["autoplay"] as! Bool
+  //     let loop = config["loop"] as! Bool
+  //     self.playerView?.isLoopingEnabled = loop
+  //     self.videoAutoplay = autoplay
+  //     self.videoLoop = loop
+  //     let player = self.playerView?.player
+  //     if ((loop || autoplay) && (player?.rate == 0 || player?.error != nil)) {
+  //       player?.play()
+  //     }
+  //   }
+  // }
 
   func loadVideoPlayer(itemUrl: URL) {
     if (self.playerView == nil) {
