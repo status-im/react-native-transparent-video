@@ -88,7 +88,7 @@ class TransparentVideoView : UIView {
           (kCVPixelBufferPixelFormatTypeKey as String): kCVPixelFormatType_32BGRA]
 
       // Setup looping on our video
-      // playerView.isLoopingEnabled = self.videoAutoplay ?? true
+      playerView.isLoopingEnabled = self.videoLoop ?? true
 
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackgound), name: UIApplication.didEnterBackgroundNotification, object: nil)
       NotificationCenter.default.addObserver(self, selector: #selector(appEnteredForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -149,7 +149,7 @@ class TransparentVideoView : UIView {
           return print("Something went wrong when loading our video", error)
 
         case .success(let player) where self?.videoAutoplay == true:
-          self?.playerView!.isLoopingEnabled = self?.videoAutoplay ?? true
+          // self?.playerView!.isLoopingEnabled = self?.videoLoop ?? true
           // Finally, we can start playing
           player.play()
 
