@@ -44,7 +44,7 @@ const ParallaxVideo = ({ source, zIndex }: any) => {
 
   return (
     <Animated.View style={[styles.container, layerStyle]}>
-      <TransparentVideo source={source} style={styles.video} />
+      <TransparentVideo source={source} style={styles.video} autoplay />
     </Animated.View>
   );
 };
