@@ -47,8 +47,11 @@ public class TransparentVideoViewManager extends SimpleViewManager<LinearLayout>
     return view;
   }
 
-  public static void destroyView(LinearLayout view) {
-    sInstances.remove(view);
+  @Override
+  public void onDropViewInstance(@NonNull LinearLayout view) {
+    super.onDropViewInstance(view);
+    AlphaMovieView alphaMovieView = (AlphaMovieView)view.getChildAt(0);
+    alphaMovieView.cleanup();
   }
 
   @ReactProp(name = "src")
