@@ -22,8 +22,6 @@ import java.util.List;
 
 public class TransparentVideoViewManager extends SimpleViewManager<LinearLayout> {
 
-  private static List<LinearLayout> sInstances = new ArrayList<>();
-
   public static final String REACT_CLASS = "TransparentVideoView";
   private static final String TAG = "TransparentVideoViewManager";
 
@@ -43,12 +41,14 @@ public class TransparentVideoViewManager extends SimpleViewManager<LinearLayout>
   @NonNull
   public LinearLayout createViewInstance(ThemedReactContext reactContext) {
     LinearLayout view = new LinearLayout(this.reactContext);
-    sInstances.add(view);
     return view;
   }
 
-  public static void destroyView(LinearLayout view) {
-    sInstances.remove(view);
+  @Override
+  public void onDropViewInstance(@NonNull LinearLayout view) {
+    super.onDropViewInstance(view);
+    AlphaMovieView alphaMovieView = (AlphaMovieView)view.getChildAt(0);
+    alphaMovieView.cleanup();
   }
 
   @ReactProp(name = "src")

@@ -427,12 +427,9 @@ public class AlphaMovieView extends GLTextureView {
         pause();
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
+    protected void cleanup() {
         release();
-      handler.removeCallbacks(timeDetector);
-      TransparentVideoViewManager.destroyView((LinearLayout)this.getParent());
+        handler.removeCallbacks(timeDetector);
     }
 
     private void prepareAsync(final MediaPlayer.OnPreparedListener onPreparedListener) {
